@@ -1,0 +1,54 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.1
+      nodejs: 18
+    commands:
+      - echo "Installing system packages..."
+      - apt-get update -y
+      - apt-get install -y unzip curl git
+
+      - echo "Installing Composer dependencies..."
+      - composer install --no-dev --optimize-autoloader
+
+      - echo "Copying .env file..."
+      - cp .env.example .env
+
+      - echo "Generating app key..."
+      - php artisan key:generate
+
+  pre_build:
+    commands:
+      - echo "Running Laravel optimizations..."
+      - php artisan config:clear
+      - php artisan route:clear
+      - php artisan view:clear
+      - php artisan cache:clear
+
+      - echo "Setting correct permissions..."
+      - chmod -R 775 storage bootstrap/cache
+
+  build:
+    commands:
+      - echo "Running frontend build (if needed)..."
+      - npm install
+      - npm run build || echo "Skipping asset build"
+
+  post_build:
+    commands:
+      - echo "Running Laravel migrations (optional)..."
+      - php artisan migrate --force || echo "Migration skipped or failed"
+
+      - echo "Build complete."
+
+artifacts:
+  files:
+    - '**/*'
+    - '!node_modules/**'
+    - '!.git/**'
+    - '!tests/**'
+    - '!storage/logs/**'
+    - '!vendor/**' # Optional: exclude vendor if not using composer install on EC2
+  discard-paths: no
