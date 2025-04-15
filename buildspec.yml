@@ -8,7 +8,10 @@ phases:
     commands:
       - echo "Installing system packages..."
       - yum update -y
-      - yum install -y php php-mbstring php-pdo php-mysqlnd php-xml php-gd php-mbstring php-json php-bcmath php-cli php-common php-devel php-mysqlnd php-process php-pecl-zip
+      - yum install -y git curl zip unzip
+      - amazon-linux-extras enable php8.3
+      - yum clean metadata
+      - yum install -y php-mbstring php-pdo php-mysqlnd php-xml php-gd php-mbstring php-json php-bcmath php-cli php-common php-devel php-mysqlnd php-process php-pecl-zip
       - echo "Installing Composer dependencies..."
       - composer install --no-dev --optimize-autoloader
 
