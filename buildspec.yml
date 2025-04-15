@@ -7,8 +7,8 @@ phases:
       nodejs: 18
     commands:
       - echo "Installing system packages..."
-      - apt-get update -y
-      - apt-get install -y unzip curl git
+      - yum update -y
+      - yum install -y unzip curl git
 
       - echo "Installing Composer dependencies..."
       - composer install --no-dev --optimize-autoloader
