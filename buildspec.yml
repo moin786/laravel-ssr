@@ -3,9 +3,12 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Updating apt and installing PHP 8.3 with extensions"
+      - echo "Installing PHP 8.3 on Ubuntu with ondrej/php PPA"
       - apt-get update -y
-      - apt-get install -y php8.3 php8.3-cli php8.3-mbstring php8.3-xml php8.3-mysql php8.3-curl php8.3-bcmath php8.3-zip php8.3-gd php8.3-common php8.3-readline php8.3-intl php8.3-pgsql unzip git curl zip
+      - apt-get install -y software-properties-common lsb-release ca-certificates apt-transport-https
+      - add-apt-repository ppa:ondrej/php -y
+      - apt-get update -y
+      - apt-get install -y php8.3 php8.3-cli php8.3-common php8.3-mbstring php8.3-xml php8.3-mysql php8.3-curl php8.3-bcmath php8.3-zip php8.3-gd php8.3-readline php8.3-intl php8.3-pgsql unzip git curl zip
       - update-alternatives --set php /usr/bin/php8.3
       - php -v
   pre_build:
