@@ -8,7 +8,7 @@ phases:
     commands:
       - echo "Installing system packages..."
       - yum update -y
-      - yum install -y git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev pdo_mysql mbstring exif pcntl
+      - yum install -y php php-mbstring php-pdo php-mysqlnd php-xml php-gd php-mbstring php-json php-bcmath php-cli php-common php-devel php-mysqlnd php-process php-pecl-zip
       - echo "Installing Composer dependencies..."
       - composer install --no-dev --optimize-autoloader
 
